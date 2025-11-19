@@ -1,0 +1,37 @@
+git clone https://github.com/kernoelpanic/eth-client.git
+cd eth-client
+
+
+
+
+sudo systemctl start docker
+sudo systemctl enable docker
+
+
+sudo usermod -aG docker $USER
+newgrp docker
+
+sudo curl -SL https://github.com/docker/compose/releases/download/v2.32.4/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+
+
+cd eth-client
+docker-compose build --build-arg UID=$(id -u) --build-arg GID=$(id -g)
+
+
+docker-compose up -d
+
+
+┌──(kali㉿kali)-[~/eth-client]
+└─$ docker-compose down --volumes
+WARN[0000] /home/kali/eth-client/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion 
+[+] Running 8/8
+ ✔ Container anvil-cnt           Removed                                                                      11.6s 
+ ✔ Container geth-client-cnt     Removed                                                                       1.4s 
+ ✔ Container notebookcnt         Removed                                                                       2.3s 
+ ✔ Container eth-client-chown-1  Removed                                                                       0.2s 
+ ✔ Volume eth-client_geth        Removed                                                                       0.2s 
+ ✔ Volume eth-client_keystore    Removed                                                                       0.2s 
+ ✔ Volume eth-client_notebook    Removed                                                                       0.2s 
+ ✔ Network eth-client_default    Removed                                                                       0.6s 
+
